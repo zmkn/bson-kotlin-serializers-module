@@ -519,6 +519,5 @@ tasks.withType<Test> {
 dependencies {
     api(libs.kotlinx.serialization.json) // Kotlin json 序列化库
     api(libs.mongodb.bson) // Mongodb Bson 库
-    api(libs.jackson.databind) // JSON 序列化库
     testImplementation(kotlin("test")) // Kotlin 测试依赖
 }
