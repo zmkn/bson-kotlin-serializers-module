@@ -2,6 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.gradle.jvm.tasks.Jar
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.konan.properties.Properties
+import org.jreleaser.gradle.plugin.JReleaserExtension
 import org.jreleaser.model.Active
 import org.jreleaser.model.Signing
 import org.jreleaser.model.Stereotype
@@ -55,9 +56,7 @@ configurations.all {
 }
 
 if (localProperties.getProperty("mavenPublish.enable") == "true") {
-    apply {
-        plugin("maven-publish")
-    }
+    plugins.apply("maven-publish")
 
     configure<PublishingExtension> {
         publications {
@@ -116,16 +115,14 @@ if (localProperties.getProperty("mavenPublish.enable") == "true") {
 }
 
 if (localProperties.getProperty("jreleaser.enable") == "true") {
-    apply {
-        plugin(rootProject.libs.plugins.jreleaser.get().pluginId)
-    }
+    plugins.apply(rootProject.libs.plugins.jreleaser.get().pluginId)
 
     val buildJreleaserDir = layout.buildDirectory.dir("jreleaser").get().asFile
     if (!buildJreleaserDir.exists()) {
         buildJreleaserDir.mkdirs()
     }
 
-    configure<org.jreleaser.gradle.plugin.JReleaserExtension> {
+    configure<JReleaserExtension> {
         project {
             name.set("Bson Kotlin Serializers Module")
 
@@ -300,7 +297,7 @@ if (localProperties.getProperty("jreleaser.enable") == "true") {
         deploy {
             maven {
                 github {
-                    create("github") {
+                    register("github") {
                         // Enables or disables the deployer.
                         // Supported values are [`NEVER`, `ALWAYS`, `RELEASE`, `SNAPSHOT`].
                         // Defaults to `NEVER`.
@@ -382,7 +379,7 @@ if (localProperties.getProperty("jreleaser.enable") == "true") {
                     }
                 }
                 mavenCentral {
-                    create("central") {
+                    register("central") {
                         // Enables or disables the deployer.
                         // Supported values are [`NEVER`, `ALWAYS`, `RELEASE`, `SNAPSHOT`].
                         // Defaults to `NEVER`.
