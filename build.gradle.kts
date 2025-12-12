@@ -383,7 +383,7 @@ if (localProperties.getProperty("jreleaser.enable") == "true") {
                         // Enables or disables the deployer.
                         // Supported values are [`NEVER`, `ALWAYS`, `RELEASE`, `SNAPSHOT`].
                         // Defaults to `NEVER`.
-                        active.set(if (localProperties.getProperty("jreleaser.deploy.maven.github.enable") == "true") Active.ALWAYS else Active.NEVER)
+                        active.set(if (localProperties.getProperty("jreleaser.deploy.maven.mavenCentral.enable") == "true") Active.ALWAYS else Active.NEVER)
 
                         // URL where the MavenCentral service is enabled.
                         url.set("https://central.sonatype.com/api/v1/publisher")
